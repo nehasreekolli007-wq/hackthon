@@ -1,0 +1,20 @@
+{
+  "name": "Farmer Friendly - AI Agricultural Assistant",
+  "short_name": "Farmer Friendly",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#2e7d32",
+  "theme_color": "#2e7d32",
+  "icons": [
+    {
+      "src": "https://images.unsplash.com/photo-1546146830-2ee95101705c?auto=format&fit=crop&q=80&w=192",
+      "sizes": "192x192",
+      "type": "image/jpeg"
+    },
+    {
+      "src": "https://images.unsplash.com/photo-1546146830-2ee95101705c?auto=format&fit=crop&q=80&w=512",
+      "sizes": "512x512",
+      "type": "image/jpeg"
+    }
+  ]
+}

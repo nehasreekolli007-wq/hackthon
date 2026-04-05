@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Farmer Friendly - AI Agricultural Assistant</title>
+    <meta name="description" content="AI-powered crop disease detection and treatment for farmers.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#2e7d32">
+</head>
+<body>
+    <div id="app">
+        <header class="app-header">
+            <div class="logo">
+                <span class="logo-icon">🌿</span>
+                <h1 id="app-title">Farmer Friendly</h1>
+            </div>
+            <div class="header-actions">
+                <button id="btn-sunlight" class="btn-icon" title="Sunlight Mode">☀️</button>
+                <div id="offline-indicator" class="hidden">OFFLINE</div>
+            </div>
+        </header>
+
+        <main class="content-area">
+            <!-- Welcome (Front) Page -->
+            <section id="screen-welcome" class="screen active">
+                <div class="welcome-hero">
+                    <div class="hero-logo">
+                        <span class="logo-large">🌿</span>
+                    </div>
+                    <h1 class="welcome-title" id="welcome-title">Farmer Friendly</h1>
+                    <p class="welcome-tagline" id="welcome-tagline">AI-Powered Precision for Every Crop.</p>
+                </div>
+                
+                <div class="welcome-features">
+                    <div class="feature-item">
+                        <span class="feature-icon">🔍</span>
+                        <div class="feature-text">
+                            <h3 id="f1-title">Instant Detection</h3>
+                            <p id="f1-desc">Identify diseases in seconds</p>
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <span class="feature-icon">💊</span>
+                        <div class="feature-text">
+                            <h3 id="f2-title">Expert Cure</h3>
+                            <p id="f2-desc">Verified treatment advice</p>
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <span class="feature-icon">🛒</span>
+                        <div class="feature-text">
+                            <h3 id="f3-title">Store Finder</h3>
+                            <p id="f3-desc">Locate nearby stores</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="welcome-actions">
+                    <button id="btn-get-started" class="btn-primary btn-pulse">
+                        <span id="welcome-btn-text">Get Started / शुरू करें</span> <span>→</span>
+                    </button>
+                    <p class="voice-hint">Available in 6+ local languages</p>
+                </div>
+            </section>
+
+            <!-- Language Screen -->
+            <section id="screen-language" class="screen">
+                <h2 id="lang-heading">Select Your Language</h2>
+                <div class="language-grid">
+                    <button class="btn-lang" data-lang="en">English</button>
+                    <button class="btn-lang" data-lang="hi">हिन्दी</button>
+                    <button class="btn-lang" data-lang="te">తెలుగు</button>
+                    <button class="btn-lang" data-lang="ta">தமிழ்</button>
+                    <button class="btn-lang" data-lang="kn">ಕನ್ನಡ</button>
+                    <button class="btn-lang" data-lang="mr">मराठी</button>
+                </div>
+
+                <!-- Weather Widget -->
+                <div id="weather-widget" class="weather-card glass">
+                    <div class="weather-info">
+                        <span id="weather-icon">☀️</span>
+                        <div class="temp-box">
+                            <span id="weather-temp">--°C</span>
+                            <span id="weather-desc">Loading weather...</span>
+                        </div>
+                    </div>
+                    <div class="location-box">
+                        <span id="weather-location">--</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Crop Selection Screen -->
+            <section id="screen-crop" class="screen">
+                <button id="btn-back-to-lang" class="btn-back">←</button>
+                <h2 id="crop-heading">Select Crop</h2>
+                
+                <div class="search-container">
+                    <input type="text" id="crop-search" placeholder="Search crops...">
+                    <span class="search-icon">🔍</span>
+                </div>
+
+                <div id="crop-grid" class="crop-grid">
+                    <!-- Dynamic -->
+                </div>
+            </section>
+
+            <!-- Detection Screen -->
+            <section id="screen-upload" class="screen">
+                <button id="btn-back-to-crop" class="btn-back">←</button>
+                <h2 id="upload-heading">Analyze Crop</h2>
+                
+                <div class="upload-container">
+                    <div id="upload-box" class="upload-box">
+                        <div class="viewfinder-corners">
+                            <span></span><span></span><span></span><span></span>
+                        </div>
+                        <span class="upload-icon">📸</span>
+                        <p id="upload-text">Upload Photo</p>
+                        <input type="file" id="file-input" accept="image/*" capture="environment">
+                    </div>
+
+                    <div id="preview-container" class="preview-container hidden">
+                        <div class="preview-wrapper">
+                            <img id="image-preview" src="" alt="Preview">
+                            <div class="scan-line hidden" id="scan-line"></div>
+                            <div id="scan-overlay" class="scan-overlay hidden">
+                                <div class="scan-grid"></div>
+                                <div class="scan-percentage" id="scan-percentage">0%</div>
+                                <div class="scan-status" id="scan-status">SCANNING...</div>
+                                <div class="detection-box hidden" id="detection-box">
+                                    <span class="detect-label" id="lbl-detected">DETECTED</span>
+                                </div>
+                            </div>
+                        </div>
+                        <p id="clarity-warning" class="warning hidden"></p>
+                        <div class="upload-actions">
+                            <button id="btn-analyze" class="btn-primary">Analyze</button>
+                            <button id="btn-retry" class="btn-secondary hidden">Retry</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Results Screen -->
+            <section id="screen-result" class="screen">
+                <button id="btn-back-to-upload" class="btn-back">←</button>
+                <h2 id="result-heading">Diagnosis Result</h2>
+
+                <div class="result-card glass">
+                    <div class="result-header">
+                        <div class="disease-main">
+                            <span id="lbl-disease-name" class="label">Disease</span>
+                            <p id="res-disease-name" class="highlight-text">-</p>
+                        </div>
+                        <div class="confidence-box">
+                            <div class="conf-top">
+                                <span id="lbl-confidence" class="label">Confidence</span>
+                                <p id="res-confidence" class="conf-val">0%</p>
+                            </div>
+                            <div class="confidence-bar">
+                                <div id="confidence-fill"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tab-container">
+                        <button class="tab-btn active" data-tab="tab-explanation" id="lbl-explanation">Explanation</button>
+                        <button class="tab-btn" data-tab="tab-treatment" id="lbl-treatment">Treatment</button>
+                    </div>
+
+                    <div id="tab-explanation" class="tab-content active">
+                        <div class="info-group">
+                            <h4 id="lbl-cause">Cause of Disease</h4>
+                            <p id="res-cause">-</p>
+                        </div>
+                        <div class="info-group">
+                            <h4 id="lbl-reason">Why it occurred</h4>
+                            <p id="res-reason">-</p>
+                        </div>
+                        <div class="info-group">
+                            <h4 id="lbl-prevention">Prevention</h4>
+                            <ul id="res-prevention"></ul>
+                        </div>
+                    </div>
+
+                    <div id="tab-treatment" class="tab-content">
+                        <div class="medicine-badge">
+                            <p id="res-medicine" class="med-name">-</p>
+                            <p id="res-quantity" class="med-qty">-</p>
+                        </div>
+                        <div class="info-group">
+                            <p id="res-instructions" class="med-inst">-</p>
+                            <p class="price-tag"><span id="lbl-price">Price</span>: <strong id="res-price">-</strong></p>
+                        </div>
+                        
+                        <div class="stores-section">
+                            <h4 id="lbl-stores">Nearby Stores</h4>
+                            <div id="stores-list" class="stores-list"></div>
+                        </div>
+
+                        <p id="res-consult" class="consult-note"></p>
+                    </div>
+
+                    <div class="voice-section">
+                        <button id="btn-speak" class="btn-voice">
+                            <span class="voice-icon">🔊</span>
+                            <span id="lbl-speak">Listen</span>
+                        </button>
+                    </div>
+
+                    <div class="feedback-section">
+                        <p id="lbl-feedback" class="label text-center">Is this accurate?</p>
+                        <div class="feedback-btns">
+                            <button class="btn-feedback" data-val="1" id="lbl-accurate">✅ Yes</button>
+                            <button class="btn-feedback" data-val="0" id="lbl-not-accurate">❌ No</button>
+                        </div>
+                    </div>
+
+                    <div class="result-actions">
+                        <button id="btn-scan-again" class="btn-primary" style="margin-top: 1.5rem; width: 100%;">
+                            <span>🔄</span> <span id="lbl-scan-again">Scan Again / फिर से स्कैन करें</span>
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- History Screen -->
+            <section id="screen-history" class="screen">
+                <h2 id="history-heading">Scan History</h2>
+                <div id="history-list" class="history-list">
+                    <div class="empty-state">
+                        <span class="empty-icon">📂</span>
+                        <p id="lbl-no-history">No scan history yet.</p>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+        
+        <footer class="app-footer">
+            <p>&copy; 2026 Farmer Friendly AI</p>
+        </footer>
+
+        <!-- Bottom Navigation Bar -->
+        <nav class="bottom-nav">
+            <button class="nav-item active" data-screen="screen-language">
+                <span class="nav-icon">🌍</span>
+                <span class="nav-label" id="nav-lang">Language</span>
+            </button>
+            <button class="nav-item" data-screen="screen-history">
+                <span class="nav-icon">📜</span>
+                <span class="nav-label" id="nav-history">History</span>
+            </button>
+            <button class="nav-item" data-screen="screen-upload">
+                <span class="nav-icon">📸</span>
+                <span class="nav-label" id="nav-scan">Scan</span>
+            </button>
+            <button class="nav-item" data-screen="screen-crop">
+                <span class="nav-icon">🌾</span>
+                <span class="nav-label" id="nav-crops">Crops</span>
+            </button>
+        </nav>
+
+        <!-- Custom Alert Modal -->
+        <div id="custom-alert" class="modal hidden">
+            <div class="modal-content glass">
+                <span class="modal-icon">⏳</span>
+                <h3 id="alert-title">Notice</h3>
+                <p id="alert-message">Message goes here</p>
+                <button id="btn-close-alert" class="btn-primary">OK</button>
+            </div>
+        </div>
+    </div>
+    <script type="module" src="main.js"></script>
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js').catch(() => {});
+            });
+        }
+    </script>
+</body>
+</html>
