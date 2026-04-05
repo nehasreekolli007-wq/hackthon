@@ -7,7 +7,7 @@
 // ─────────────────────────────────────────────────────────────
 
 // Our backend proxy endpoint
-const TTS_PROXY = 'https://farmer-friendly-backend.onrender.com/tts';
+const TTS_PROXY = 'https://hackthon-3-nk64.onrender.com/tts';
 
 
 // Google Translate language codes
