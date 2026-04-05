@@ -7,7 +7,8 @@
 // ─────────────────────────────────────────────────────────────
 
 // Our backend proxy endpoint
-const TTS_PROXY = 'http://localhost:5000/tts';
+const TTS_PROXY = 'https://farmer-friendly-backend.onrender.com/tts';
+
 
 // Google Translate language codes
 const GT_LANG = {
@@ -25,7 +26,7 @@ let _currentAudio = null;
 // Stop any playing audio
 const stopAll = () => {
   if (_currentAudio) {
-    try { _currentAudio.pause(); _currentAudio.src = ''; } catch (_) {}
+    try { _currentAudio.pause(); _currentAudio.src = ''; } catch (_) { }
     _currentAudio = null;
   }
   if ('speechSynthesis' in window) window.speechSynthesis.cancel();
@@ -108,7 +109,7 @@ const speakEnglish = async (text) => {
   if (voice) utterance.voice = voice;
 
   utterance.onstart = () => console.log('[Voice] 🔊 English speech started.');
-  utterance.onend   = () => console.log('[Voice] ✅ English done.');
+  utterance.onend = () => console.log('[Voice] ✅ English done.');
   utterance.onerror = (e) => console.error('[Voice] Web Speech error:', e.error);
 
   setTimeout(() => window.speechSynthesis.speak(utterance), 80);
