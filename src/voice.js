@@ -7,7 +7,7 @@
 // ─────────────────────────────────────────────────────────────
 
 // Our backend proxy endpoint
-const TTS_PROXY = 'https://hackthon-3-nk64.onrender.com/tts';
+const TTS_PROXY = 'http://localhost:5000/tts';
 
 
 // Google Translate language codes
